@@ -50,10 +50,13 @@
     (love.graphics.draw sprite transform)))
 
 ;; Updating the player.
-(fn player-update [dt]
+(fn player-update [camera dt]
   (body.applyAngularImpulse body
                             (* speed
-                               (input.get-axis "left" "right"))))
+                               (input.get-axis "left" "right")))
+
+  (let [(x y) (body.getWorldPoint body (shape.getPoint shape))]
+    (camera.set-target (+ x radius) (+ y radius))))
 
 ;; Returns whether or not the player is actively on the ground.
 (fn player-on-ground []

@@ -1,5 +1,6 @@
 (local fennel (require "lib.fennel"))
 
+(local camera (require "game.entities.camera"))
 (local floor-top (require "game.entities.floor-top"))
 (local player (require "game.entities.player"))
 
@@ -11,7 +12,8 @@
 (local (screen-width screen-height) (love.window.getMode))
 
 (local entities
-       [player
+       [camera
+        player
         (floor-top.make (/ screen-width 2)
                         (- screen-height 16)
                         screen-width
@@ -28,7 +30,7 @@
 
 (fn love.update [dt]
   (each [_ entity (ipairs entities)]
-    (entity.update dt))
+    (entity.update camera dt))
   (world.update world dt))
 
 (fn love.keypressed [key scancode repeat]

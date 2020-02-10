@@ -36,7 +36,7 @@
 
   {:load floor-top-load
    :draw floor-top-draw
-   :update (fn [dt])
+   :update (fn [])
    :keypressed (fn [])})
 
 {:make make-floor-top}
