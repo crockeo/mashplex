@@ -34,10 +34,9 @@
                           x
                           y)))
 
-  (fn floor-top-update [dt])
-
   {:load floor-top-load
    :draw floor-top-draw
-   :update floor-top-update})
+   :update (fn [dt])
+   :keypressed (fn [])})
 
 {:make make-floor-top}

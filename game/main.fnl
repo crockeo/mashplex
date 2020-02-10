@@ -30,3 +30,7 @@
   (each [_ entity (ipairs entities)]
     (entity.update dt))
   (world.update world dt))
+
+(fn love.keypressed [key scancode repeat]
+  (each [_ entity (ipairs entities)]
+    (entity.keypressed key scancode repeat)))

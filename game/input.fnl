@@ -17,13 +17,19 @@
 
         "jump" ["z" "/" "space"]})
 
+;; Checks if a given key is part of an input.
+(fn is-input [key input]
+  (lume.reduce
+   (lume.map (. inputs input) (partial = key))
+   (fn [a b] (or a b))
+   false))
+
 ;; Checks if a given input is pressed by checking against each of the possible
 ;; keybinds for that input.
 (fn is-pressed [input]
   (lume.reduce
    (lume.map (. inputs input) love.keyboard.isDown)
-   (fn [i1 i2]
-     (or i1 i2))
+   (fn [a b] (or a b))
    false))
 
 ;; Returns the axis defined by a negative and positive key. Designed so that
@@ -36,5 +42,6 @@
          1
          0)))
 
-{:is-pressed is-pressed
+{:is-input is-input
+ :is-pressed is-pressed
  :get-axis get-axis}

@@ -1,6 +1,8 @@
 (local input (require "game.input"))
 
 (local speed 100)
+(local jump-impulse 200)
+
 (local x 100)
 (local y 100)
 
@@ -51,6 +53,14 @@
                             (* speed
                                (input.get-axis "left" "right"))))
 
+;; Performing actions with the player. Like dashing or jumping.
+(fn player-keypressed [key scancode repeat]
+  (when (input.is-input key "jump")
+    (body.applyLinearImpulse body
+                             0
+                             (- jump-impulse))))
+
 {:load player-load
  :draw player-draw
- :update player-update}
+ :update player-update
+ :keypressed player-keypressed}
