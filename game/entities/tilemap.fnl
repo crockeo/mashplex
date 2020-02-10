@@ -4,22 +4,25 @@
 (local sti (require "lib.sti"))
 
 
+(local map (sti "res/map/level.lua"
+                  ;; { "box2d" }
+                  ))
+
 (fn tiled-load [world]
-  (local map (sti "res/tiled_map.lua" { "box2d" }))
-  (map.box2d_init world)
+  ;; (map.box2d_init world)
   )
 
 (fn tiled-draw [world]
+  (map.draw)
   )
 
-(fn tiled-update [world]
-  (map.update world)
+(fn tiled-update [dt]
+  (map.update dt)
   )
 
 {:load tiled-load
  :draw tiled-draw
- :update
- tiled-update
+ :update tiled-update
  :keypressed (fn [key scancode repeat])
  ;; :set-target camera-set-target
  }

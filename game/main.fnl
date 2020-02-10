@@ -4,6 +4,7 @@
 
 (local floor-top (require "game.entities.floor-top"))
 (local player (require "game.entities.player"))
+(local tilemap (require "game.entities.tilemap"))
 
 (local world (love.physics.newWorld
               0
