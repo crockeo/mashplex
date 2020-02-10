@@ -9,4 +9,4 @@ pp = function(x)
    print(require("lib.fennelview")(x))
 end
 
-require("game")
+require("game.main")
