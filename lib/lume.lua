@@ -272,7 +272,7 @@ end
 
 function lume.reduce(t, fn, first)
   local acc = first
-  local started = first and true or false
+  local started = (first ~= nil) and true or false
   local iter = getiter(t)
   for _, v in iter(t) do
     if started then

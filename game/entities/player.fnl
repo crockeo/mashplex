@@ -1,3 +1,5 @@
+(local lume (require "lib.lume"))
+
 (local input (require "game.input"))
 
 (local speed 100)
@@ -53,9 +55,20 @@
                             (* speed
                                (input.get-axis "left" "right"))))
 
+;; Returns whether or not the player is actively on the ground.
+(fn player-on-ground []
+  (lume.reduce
+   (lume.map (body.getContacts body)
+             (fn [contact]
+               (let [(_ dy) (contact.getNormal contact)]
+                 (< dy 0))))
+   (fn [a b] (or a b))
+   false))
+
 ;; Performing actions with the player. Like dashing or jumping.
 (fn player-keypressed [key scancode repeat]
-  (when (input.is-input key "jump")
+  (when (and (input.is-input key "jump")
+             (player-on-ground))
     (body.applyLinearImpulse body
                              0
                              (- jump-impulse))))
