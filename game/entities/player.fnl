@@ -47,17 +47,9 @@
 
 ;; Updating the player.
 (fn player-update [dt]
-  (let [get-dir (fn [neg-key pos-key]
-                  (+ (if (input.is-pressed neg-key)
-                         -1
-                         0)
-                     (if (input.is-pressed pos-key)
-                         1
-                         0)))]
-
-    (body.applyAngularImpulse body
-                              (* speed
-                                 (get-dir "left" "right")))))
+  (body.applyAngularImpulse body
+                            (* speed
+                               (input.get-axis "left" "right"))))
 
 {:load player-load
  :draw player-draw

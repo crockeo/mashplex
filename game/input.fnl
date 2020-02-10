@@ -26,4 +26,15 @@
      (or i1 i2))
    false))
 
-{:is-pressed is-pressed}
+;; Returns the axis defined by a negative and positive key. Designed so that
+;; when both the negative and positive are held down, there is no movement.
+(fn get-axis [neg-key pos-key]
+  (+ (if (is-pressed neg-key)
+         -1
+         0)
+     (if (is-pressed pos-key)
+         1
+         0)))
+
+{:is-pressed is-pressed
+ :get-axis get-axis}
