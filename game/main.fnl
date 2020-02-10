@@ -1,4 +1,5 @@
 (local fennel (require "lib.fennel"))
+(local repl (require "lib.stdio"))
 
 (local camera (require "game.entities.camera"))
 
@@ -16,15 +17,17 @@
 (local entities
        [camera
         player
-        ;; (floor-top.make (/ screen-width 2)
-        ;;                 (- screen-height 16)
-        ;;                 screen-width
-        ;;                 32)
-        tilemap
+        (floor-top.make (/ screen-width 2)
+                        (- screen-height 16)
+                        screen-width
+                        32)
+        ;; tilemap
         ])
 
 ;; Loading resources
 (fn love.load []
+  (print "starting")
+  (: repl :start)
   (each [_ entity (ipairs entities)]
     (entity.load world)))
 
