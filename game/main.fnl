@@ -1,6 +1,7 @@
 (local fennel (require "lib.fennel"))
 
 (local camera (require "game.entities.camera"))
+
 (local floor-top (require "game.entities.floor-top"))
 (local player (require "game.entities.player"))
 
@@ -14,10 +15,12 @@
 (local entities
        [camera
         player
-        (floor-top.make (/ screen-width 2)
-                        (- screen-height 16)
-                        screen-width
-                        32)])
+        ;; (floor-top.make (/ screen-width 2)
+        ;;                 (- screen-height 16)
+        ;;                 screen-width
+        ;;                 32)
+        tilemap
+        ])
 
 ;; Loading resources
 (fn love.load []
