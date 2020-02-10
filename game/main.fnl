@@ -1,5 +1,6 @@
 (local fennel (require "lib.fennel"))
 
+(local floor-top (require "game.entities.floor-top"))
 (local player (require "game.entities.player"))
 
 (local world (love.physics.newWorld
@@ -7,7 +8,14 @@
               (* 9.81 30)
               true))
 
-(local entities [player])
+(local (screen-width screen-height) (love.window.getMode))
+
+(local entities
+       [player
+        (floor-top.make (/ screen-width 2)
+                        (- screen-height 16)
+                        screen-width
+                        32)])
 
 ;; Loading resources
 (fn love.load []

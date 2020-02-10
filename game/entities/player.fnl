@@ -1,9 +1,11 @@
 (local input (require "game.input"))
 
 (local speed 100)
+(local x 100)
+(local y 100)
 
-(var x 100)
-(var y 100)
+(local radius 16)
+
 (var sprite nil)
 
 (var body nil)
@@ -30,7 +32,9 @@
 ;; Rendering our cute lil ball friend at its coordinates.
 (fn player-draw []
   (let [(x y) (body.getWorldPoint body (shape.getPoint shape))]
-    (love.graphics.draw sprite x y)))
+    (love.graphics.draw sprite
+                        (- x radius)
+                        (- y radius))))
 
 ;; Updating the player.
 (fn player-update [dt]
