@@ -1,4 +1,31 @@
 (local fennel (require "lib.fennel"))
+(local lume (require "lib.lume"))
+
+;; Defining each of our inputs. Designed to have a natural left-handed or right-
+;; handed binding.
+;;
+;; - Right handed: up/left/down/right, z, v
+;; - Left Handed: wasd, m, /
+;;
+;; Additional "space" binding for jump for first-time usability concerns.
+(local inputs
+       {"up" ["w" "up"]
+        "left" ["a" "left"]
+        "down" ["s" "down"]
+        "right" ["d" "right"]
+
+        "dash" ["v" "m"]
+
+        "jump" ["z" "/" "space"]})
+
+;; Checks if a given input is pressed by checking against each of the possible
+;; keybinds for that input.
+(fn is-pressed [input]
+  (lume.reduce
+   (lume.map (. inputs input) love.keyboard.isDown)
+   (fn [i1 i2]
+     (or i1 i2))
+   false))
 
 (local circle-radius 5)
 (local speed 100)
@@ -15,10 +42,10 @@
 
 ;; Getting the direction on a given axis
 (fn get-dir [neg-key pos-key]
-  (+ (if (love.keyboard.isDown neg-key)
+  (+ (if (is-pressed neg-key)
          -1
          0)
-     (if (love.keyboard.isDown pos-key)
+     (if (is-pressed pos-key)
          1
          0)))
 
@@ -27,9 +54,9 @@
   (set x (+ x
             (* dt
                speed
-               (get-dir "a" "d"))))
+               (get-dir "left" "right"))))
 
   (set y (+ y
             (* dt
                speed
-               (get-dir "w" "s")))))
+               (get-dir "up" "down")))))
