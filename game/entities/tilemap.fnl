@@ -3,21 +3,20 @@
 
 (local sti (require "lib.sti"))
 
+(var map nil)
 
-(local map (sti "res/map/level.lua"
-                  ;; { "box2d" }
-                  ))
+(fn tiled-load []
+  (set map (sti "res/map/level.lua"
+              ;; { "box2d" }
+              )))
 
-(fn tiled-load [world]
-  ;; (map.box2d_init world)
+(fn tiled-draw []
+  (map.draw map)
   )
 
-(fn tiled-draw [world]
-  (map.draw)
-  )
-
-(fn tiled-update [dt]
-  (map.update dt)
+(fn tiled-update [camera dt]
+  ;; (: map :draw) is identical to (map.draw map)
+  (: map :update dt)
   )
 
 {:load tiled-load
