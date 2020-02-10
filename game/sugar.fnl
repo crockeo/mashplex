@@ -1,19 +1,10 @@
 ;; inspo/mostly stolen: https://github.com/telent/fenestra/blob/master/main.fnl
 ;; make fennel more clojure-like
 
+(local lume (require "lib.lume"))
+
 (lambda inc [x] (+ x 1))
 (lambda dec [x] (- x 1))
-
-(lambda empty? [c] (is_null c))
-(lambda first [xs] (if (is_null xs) nil (head xs)))
-
-(lambda keys [tbl]
-  (let [out []]
-    (each [k _ (pairs tbl)]
-      (table.insert out k))
-    out))
-
-;; (first (keys {:a 1 :b 2}))
 
 ;; fennel's default is identity, not value re: comparing tables
 (lambda equal? [a b]
