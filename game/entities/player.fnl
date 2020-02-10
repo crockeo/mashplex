@@ -49,15 +49,6 @@
 
     (love.graphics.draw sprite transform)))
 
-;; Updating the player.
-(fn player-update [camera dt]
-  (body.applyAngularImpulse body
-                            (* speed
-                               (input.get-axis "left" "right")))
-
-  (let [(x y) (body.getWorldPoint body (shape.getPoint shape))]
-    (camera.set-target (+ x radius) (+ y radius))))
-
 ;; Returns whether or not the player is actively on the ground.
 (fn player-on-ground []
   (lume.reduce
@@ -67,6 +58,21 @@
                  (< dy 0))))
    (fn [a b] (or a b))
    false))
+
+;; Updating the player.
+(fn player-update [camera dt]
+  (let [axis (input.get-axis "left" "right")]
+    (when (not (player-on-ground))
+      (body.applyForce body
+                       (* speed
+                          axis)
+                       0))
+
+    (body.applyAngularImpulse body
+                              (* speed axis)))
+
+  (let [(x y) (body.getWorldPoint body (shape.getPoint shape))]
+    (camera.set-target (+ x radius) (+ y radius))))
 
 ;; Performing actions with the player. Like dashing or jumping.
 (fn player-keypressed [key scancode repeat]
