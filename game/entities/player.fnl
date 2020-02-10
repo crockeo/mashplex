@@ -1,0 +1,53 @@
+(local input (require "game.input"))
+
+(local speed 100)
+
+(var x 100)
+(var y 100)
+(var sprite nil)
+
+(var body nil)
+(var shape nil)
+(var fixture nil)
+
+;; Load's the player resources. Namely our cute lil ball friend.
+(fn player-load [world]
+  ;; Rendering resources
+  (set sprite (love.graphics.newImage "res/player.png"))
+
+  ;; Physics resources
+  (set body (love.physics.newBody
+             world
+             x y
+             "dynamic"))
+
+  (set shape (love.physics.newCircleShape 16))
+
+  (set fixture (love.physics.newFixture
+                body
+                shape)))
+
+;; Rendering our cute lil ball friend at its coordinates.
+(fn player-draw []
+  (let [(x y) (body.getWorldPoint body (shape.getPoint shape))]
+    (love.graphics.draw sprite x y)))
+
+;; Updating the player.
+(fn player-update [dt]
+  (let [get-dir (fn [neg-key pos-key]
+                  (+ (if (input.is-pressed neg-key)
+                         -1
+                         0)
+                     (if (input.is-pressed pos-key)
+                         1
+                         0)))]
+
+    (body.applyForce body
+                     (* speed
+                        (get-dir "left" "right"))
+                     (* speed
+                        (get-dir "up" "down")))))
+
+{:load player-load
+ :draw player-draw
+ :update player-update}
