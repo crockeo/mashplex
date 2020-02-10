@@ -6,25 +6,26 @@
 (var y 100)
 (var sprite nil)
 
-(local world (love.physics.newWorld
-              0
-              (* 9.81 30)
-              true))
+(var body nil)
+(var shape nil)
+(var fixture nil)
 
-(local body (love.physics.newBody
+;; Load's the player resources. Namely our cute lil ball friend.
+(fn player-load [world]
+  ;; Rendering resources
+  (set sprite (love.graphics.newImage "res/player.png"))
+
+  ;; Physics resources
+  (set body (love.physics.newBody
              world
              x y
              "dynamic"))
 
-(local shape (love.physics.newCircleShape 16))
+  (set shape (love.physics.newCircleShape 16))
 
-(local fixture (love.physics.newFixture
+  (set fixture (love.physics.newFixture
                 body
-                shape))
-
-;; Load's the player resources. Namely our cute lil ball friend.
-(fn player-load []
-  (set sprite (love.graphics.newImage "res/player.png")))
+                shape)))
 
 ;; Rendering our cute lil ball friend at its coordinates.
 (fn player-draw []
@@ -45,9 +46,7 @@
                      (* speed
                         (get-dir "left" "right"))
                      (* speed
-                        (get-dir "up" "down"))))
-
-  (world.update world dt))
+                        (get-dir "up" "down")))))
 
 {:load player-load
  :draw player-draw
