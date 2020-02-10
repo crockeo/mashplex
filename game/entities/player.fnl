@@ -44,10 +44,6 @@
     (transform.translate transform (- radius) (- radius))
 
     (love.graphics.draw sprite transform)))
-    ;; (love.graphics.draw sprite
-    ;;                     (- x radius)
-    ;;                     (- y radius)
-    ;;                     angle)))
 
 ;; Updating the player.
 (fn player-update [dt]
