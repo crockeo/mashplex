@@ -27,14 +27,27 @@
 
   (set fixture (love.physics.newFixture
                 body
-                shape)))
+                shape))
+
+  (body.setAngularDamping body 1)
+
+  (fixture.setFriction fixture 1.0)
+  (fixture.setRestitution fixture 0.3))
 
 ;; Rendering our cute lil ball friend at its coordinates.
 (fn player-draw []
-  (let [(x y) (body.getWorldPoint body (shape.getPoint shape))]
-    (love.graphics.draw sprite
-                        (- x radius)
-                        (- y radius))))
+  (let [(x y) (body.getWorldPoint body (shape.getPoint shape))
+        angle (body.getAngle body)
+        transform (love.math.newTransform)]
+    (transform.translate transform x y)
+    (transform.rotate transform angle)
+    (transform.translate transform (- radius) (- radius))
+
+    (love.graphics.draw sprite transform)))
+    ;; (love.graphics.draw sprite
+    ;;                     (- x radius)
+    ;;                     (- y radius)
+    ;;                     angle)))
 
 ;; Updating the player.
 (fn player-update [dt]
@@ -46,11 +59,9 @@
                          1
                          0)))]
 
-    (body.applyForce body
-                     (* speed
-                        (get-dir "left" "right"))
-                     (* speed
-                        (get-dir "up" "down")))))
+    (body.applyAngularImpulse body
+                              (* speed
+                                 (get-dir "left" "right")))))
 
 {:load player-load
  :draw player-draw

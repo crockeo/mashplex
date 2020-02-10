@@ -23,7 +23,9 @@
 
     (set fixture (love.physics.newFixture
                   body
-                  shape)))
+                  shape))
+
+    (fixture.setFriction fixture 1.0))
 
   (fn floor-top-draw []
     (let [(x y) (body.getWorldPoints body (shape.getPoints shape))]
