@@ -7,13 +7,15 @@
 (var x 100)
 (var y 100)
 
+(var player-sprite nil)
+
+;; Loading resources
+(fn love.load []
+  (set player-sprite (love.graphics.newImage "res/player.png")))
+
 ;; Drawing our little circle friend
 (fn love.draw []
-  (love.graphics.circle
-   "fill"
-   x
-   y
-   circle-radius))
+  (love.graphics.draw player-sprite x y))
 
 ;; Getting the direction on a given axis
 (fn get-dir [neg-key pos-key]
