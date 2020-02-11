@@ -5,20 +5,18 @@
 
 (var map nil)
 
-(fn tiled-load []
+(fn tiled-load [params]
   (set map (sti "res/map/level.lua"
               ;; { "box2d" }
               )))
 
-(fn tiled-draw [camera]
+(fn tiled-draw [params]
   (map.draw map
-            (- (camera.getX))
-            (- (camera.getY))))
+            (- (params.camera.getX))
+            (- (params.camera.getY))))
 
-(fn tiled-update [camera dt]
-  ;; (: map :draw) is identical to (map.draw map)
-  (: map :update dt)
-  )
+(fn tiled-update [params]
+  (map:update params.dt))
 
 ;; Returns the player's start position from the Tiled map.
 ;;
@@ -31,6 +29,6 @@
 {:load tiled-load
  :draw tiled-draw
  :update tiled-update
- :keypressed (fn [key scancode repeat])
+ :keypressed (fn [])
 
  :get-start-position get-start-position}

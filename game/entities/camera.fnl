@@ -22,20 +22,20 @@
   (set target-y ty))
 
 ;; Moves the global coordinate space to the location of the camera at each tick.
-(fn camera-draw [camera]
+(fn camera-draw [params]
   (love.graphics.origin)
   (love.graphics.translate (+ (- x) (/ screen-width 2))
                            (+ (- y) (/ screen-height 2))))
 
 ;; LERPs the camera towards the targeted location.
-(fn camera-update [_ dt]
-  (set x (lume.lerp x target-x (* lerp-rate dt)))
-  (set y (lume.lerp y target-y (* lerp-rate dt))))
+(fn camera-update [params]
+  (set x (lume.lerp x target-x (* lerp-rate params.dt)))
+  (set y (lume.lerp y target-y (* lerp-rate params.dt))))
 
 {:load (fn [])
  :draw camera-draw
  :update camera-update
- :keypressed (fn [key scancode repeat])
+ :keypressed (fn [])
 
  :set-target camera-set-target
 

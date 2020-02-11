@@ -9,13 +9,13 @@
   (var shape nil)
   (var fixture nil)
 
-  (fn floor-top-load [world]
+  (fn floor-top-load [params]
     ;; Rendering resources
     (set sprite (love.graphics.newImage "res/floor_top.png"))
 
     ;; physics resources
     (set body (love.physics.newBody
-               world
+               params.world
                x y
                "static"))
 
@@ -27,7 +27,7 @@
 
     (fixture.setFriction fixture 1.0))
 
-  (fn floor-top-draw [camera]
+  (fn floor-top-draw [params]
     (let [(x y) (body.getWorldPoints body (shape.getPoints shape))]
       (love.graphics.draw sprite
                           quad

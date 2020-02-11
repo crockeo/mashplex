@@ -15,13 +15,13 @@
   (var fixture nil)
 
   ;; Load's the player resources. Namely our cute lil ball friend.
-  (fn player-load [world]
+  (fn player-load [params]
     ;; Rendering resources
     (set sprite (love.graphics.newImage "res/player.png"))
 
     ;; Physics resources
     (set body (love.physics.newBody
-               world
+               params.world
                x y
                "dynamic"))
 
@@ -37,7 +37,7 @@
     (fixture.setRestitution fixture 0.3))
 
   ;; Rendering our cute lil ball friend at its coordinates.
-  (fn player-draw [camera]
+  (fn player-draw [params]
     (let [(x y) (body.getWorldPoint body (shape.getPoint shape))
           angle (body.getAngle body)
           transform (love.math.newTransform)]
@@ -58,7 +58,7 @@
      false))
 
   ;; Updating the player.
-  (fn player-update [camera dt]
+  (fn player-update [params]
     (let [axis (input.get-axis "left" "right")]
       (when (not (player-on-ground))
         (body.applyForce body
@@ -70,11 +70,11 @@
                                 (* speed axis)))
 
     (let [(x y) (body.getWorldPoint body (shape.getPoint shape))]
-      (camera.set-target (+ x radius) (+ y radius))))
+      (params.camera.set-target (+ x radius) (+ y radius))))
 
   ;; Performing actions with the player. Like dashing or jumping.
-  (fn player-keypressed [key scancode repeat]
-    (when (and (input.is-input key "jump")
+  (fn player-keypressed [params]
+    (when (and (input.is-input params.key "jump")
                (player-on-ground))
       (body.applyLinearImpulse body
                                0

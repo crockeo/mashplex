@@ -24,22 +24,23 @@
                         32)
         ])
 
-;; Loading resources
 (fn love.load []
-  (print "starting")
   (: repl :start)
   (each [_ entity (ipairs entities)]
-    (entity.load world)))
+    (entity.load {"world" world})))
 
 (fn love.draw []
   (each [_ entity (ipairs entities)]
-    (entity.draw camera)))
+    (entity.draw {"camera" camera})))
 
 (fn love.update [dt]
   (each [_ entity (ipairs entities)]
-    (entity.update camera dt))
+    (entity.update {"camera" camera
+                    "dt" dt}))
   (world.update world dt))
 
 (fn love.keypressed [key scancode repeat]
   (each [_ entity (ipairs entities)]
-    (entity.keypressed key scancode repeat)))
+    (entity.keypressed {"key" key
+                        "repeat" repeat
+                        "scancode" scancode})))
