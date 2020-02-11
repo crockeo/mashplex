@@ -22,7 +22,7 @@
   (set target-y ty))
 
 ;; Moves the global coordinate space to the location of the camera at each tick.
-(fn camera-draw []
+(fn camera-draw [camera]
   (love.graphics.origin)
   (love.graphics.translate (+ (- x) (/ screen-width 2))
                            (+ (- y) (/ screen-height 2))))
@@ -37,4 +37,7 @@
  :update camera-update
  :keypressed (fn [key scancode repeat])
 
- :set-target camera-set-target}
+ :set-target camera-set-target
+
+ :getX (fn [] x)
+ :getY (fn [] y)}

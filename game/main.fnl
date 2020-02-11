@@ -16,12 +16,12 @@
 
 (local entities
        [camera
+        tilemap
         (player.make 100 100)
         (floor-top.make (/ screen-width 2)
                         (- screen-height 16)
                         screen-width
                         32)
-        ;; tilemap
         ])
 
 ;; Loading resources
@@ -33,7 +33,7 @@
 
 (fn love.draw []
   (each [_ entity (ipairs entities)]
-    (entity.draw)))
+    (entity.draw camera)))
 
 (fn love.update [dt]
   (each [_ entity (ipairs entities)]

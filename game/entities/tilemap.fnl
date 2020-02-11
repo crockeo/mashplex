@@ -10,9 +10,10 @@
               ;; { "box2d" }
               )))
 
-(fn tiled-draw []
-  (map.draw map)
-  )
+(fn tiled-draw [camera]
+  (map.draw map
+            (- (camera.getX))
+            (- (camera.getY))))
 
 (fn tiled-update [camera dt]
   ;; (: map :draw) is identical to (map.draw map)

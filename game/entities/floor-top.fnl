@@ -27,7 +27,7 @@
 
     (fixture.setFriction fixture 1.0))
 
-  (fn floor-top-draw []
+  (fn floor-top-draw [camera]
     (let [(x y) (body.getWorldPoints body (shape.getPoints shape))]
       (love.graphics.draw sprite
                           quad

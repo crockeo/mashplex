@@ -37,7 +37,7 @@
     (fixture.setRestitution fixture 0.3))
 
   ;; Rendering our cute lil ball friend at its coordinates.
-  (fn player-draw []
+  (fn player-draw [camera]
     (let [(x y) (body.getWorldPoint body (shape.getPoint shape))
           angle (body.getAngle body)
           transform (love.math.newTransform)]
