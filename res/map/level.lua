@@ -36,14 +36,7 @@ return {
       properties = {},
       terrains = {},
       tilecount = 160,
-      tiles = {
-        {
-          id = 0,
-          properties = {
-            ["collidable"] = true
-          }
-        }
-      }
+      tiles = {}
     }
   },
   layers = {
