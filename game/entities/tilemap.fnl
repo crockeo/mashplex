@@ -20,9 +20,17 @@
   (: map :update dt)
   )
 
+;; Returns the player's start position from the Tiled map.
+;;
+;; TODO: Let's try to make this less brittle. I have a feeling that indexing on
+;;       unnamed layers is probably going to break it.
+(fn get-start-position []
+  (let [player-obj (. map.layers 2 "objects" 1)]
+    (values (. player-obj "x") (. player-obj "y"))))
+
 {:load tiled-load
  :draw tiled-draw
  :update tiled-update
  :keypressed (fn [key scancode repeat])
- ;; :set-target camera-set-target
- }
+
+ :get-start-position get-start-position}
