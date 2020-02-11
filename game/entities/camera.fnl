@@ -7,6 +7,10 @@
 ;; location to the new location.
 (local lerp-rate 8)
 
+;; Denotes the first movement of the camera. Used to move directly to the
+;; player when it's spawned.
+(var first true)
+
 ;; The location of the camera.
 (var x 0)
 (var y 0)
@@ -17,9 +21,15 @@
 (var target-y 0)
 
 ;; Sets the target of the camera.
-(fn camera-set-target [tx ty]
+(fn camera-set-target [tx ty immediate]
   (set target-x tx)
-  (set target-y ty))
+  (set target-y ty)
+
+  (when (or first immediate)
+    (set x target-x)
+    (set y target-y))
+
+  (set first false))
 
 ;; Moves the global coordinate space to the location of the camera at each tick.
 (fn camera-draw [params]

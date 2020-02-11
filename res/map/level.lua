@@ -46,31 +46,36 @@ return {
         {
           id = 1,
           properties = {
-            ["collidable"] = true
+            ["collidable"] = true,
+            ["friction"] = 1
           }
         },
         {
           id = 2,
           properties = {
-            ["collidable"] = true
+            ["collidable"] = true,
+            ["friction"] = 1
           }
         },
         {
           id = 3,
           properties = {
-            ["collidable"] = true
+            ["collidable"] = true,
+            ["friction"] = 1
           }
         },
         {
           id = 17,
           properties = {
-            ["collidable"] = true
+            ["collidable"] = true,
+            ["friction"] = 1
           }
         },
         {
           id = 19,
           properties = {
-            ["collidable"] = true
+            ["collidable"] = true,
+            ["friction"] = 1
           }
         }
       }

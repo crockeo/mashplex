@@ -27,6 +27,7 @@
 (fn love.draw []
   (each [_ entity (ipairs entities)]
     (entity.draw {"camera" camera
+                  "debug" false
                   "screen-height" screen-height
                   "screen-width" screen-width})))
 

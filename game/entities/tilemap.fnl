@@ -26,7 +26,7 @@
     (table.insert params.entities
                   (player.make px py)))
 
-  ;; (map:removeLayer "Player")
+  (map:removeLayer "Player")
 
   (map:box2d_init params.world))
 
@@ -35,9 +35,10 @@
             (- (/ params.screen-width 2) (params.camera.getX))
             (- (/ params.screen-height 2) (params.camera.getY)))
 
-  (love.graphics.setColor 1 0 0)
-  (map:box2d_draw)
-  (love.graphics.setColor 1 1 1))
+  (when params.debug
+    (love.graphics.setColor 1 0 0)
+    (map:box2d_draw)
+    (love.graphics.setColor 1 1 1)))
 
 (fn tiled-update [params]
   (map:update params.dt))

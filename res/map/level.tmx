@@ -13,26 +13,31 @@
   <tile id="1">
    <properties>
     <property name="collidable" type="bool" value="true"/>
+    <property name="friction" type="float" value="1"/>
    </properties>
   </tile>
   <tile id="2">
    <properties>
     <property name="collidable" type="bool" value="true"/>
+    <property name="friction" type="float" value="1"/>
    </properties>
   </tile>
   <tile id="3">
    <properties>
     <property name="collidable" type="bool" value="true"/>
+    <property name="friction" type="float" value="1"/>
    </properties>
   </tile>
   <tile id="17">
    <properties>
     <property name="collidable" type="bool" value="true"/>
+    <property name="friction" type="float" value="1"/>
    </properties>
   </tile>
   <tile id="19">
    <properties>
     <property name="collidable" type="bool" value="true"/>
+    <property name="friction" type="float" value="1"/>
    </properties>
   </tile>
  </tileset>
