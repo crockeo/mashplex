@@ -8,8 +8,8 @@ return {
   height = 50,
   tilewidth = 20,
   tileheight = 20,
-  nextlayerid = 5,
-  nextobjectid = 7,
+  nextlayerid = 6,
+  nextobjectid = 13,
   properties = {},
   tilesets = {
     {
@@ -41,41 +41,6 @@ return {
           id = 0,
           properties = {
             ["collidable"] = true
-          }
-        },
-        {
-          id = 1,
-          properties = {
-            ["collidable"] = true,
-            ["friction"] = 1
-          }
-        },
-        {
-          id = 2,
-          properties = {
-            ["collidable"] = true,
-            ["friction"] = 1
-          }
-        },
-        {
-          id = 3,
-          properties = {
-            ["collidable"] = true,
-            ["friction"] = 1
-          }
-        },
-        {
-          id = 17,
-          properties = {
-            ["collidable"] = true,
-            ["friction"] = 1
-          }
-        },
-        {
-          id = 19,
-          properties = {
-            ["collidable"] = true,
-            ["friction"] = 1
           }
         }
       }
@@ -214,6 +179,52 @@ return {
         18, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         18, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         18, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+      }
+    },
+    {
+      type = "objectgroup",
+      id = 5,
+      name = "Collision Overlay",
+      visible = false,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      draworder = "topdown",
+      properties = {},
+      objects = {
+        {
+          id = 12,
+          name = "",
+          type = "",
+          shape = "polyline",
+          x = 40,
+          y = 400,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          polyline = {
+            { x = -39.8134, y = -180 },
+            { x = -39.8134, y = -20 },
+            { x = -19.8134, y = -20 },
+            { x = 0, y = 0 },
+            { x = 0.186625, y = 300 },
+            { x = 300.187, y = 300 },
+            { x = 380.187, y = 220 },
+            { x = 460.187, y = 220 },
+            { x = 480.187, y = 240 },
+            { x = 480.187, y = 300 },
+            { x = 740.187, y = 300 },
+            { x = 740.187, y = 80 },
+            { x = 760.187, y = 60 },
+            { x = 780.187, y = 60 },
+            { x = 780.187, y = -180 }
+          },
+          properties = {
+            ["collidable"] = true,
+            ["friction"] = 1
+          }
+        }
       }
     },
     {

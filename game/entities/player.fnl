@@ -34,7 +34,7 @@
 
     (body.setAngularDamping body 1)
 
-    (fixture.setFriction fixture 1.0)
+    (fixture.setFriction fixture 5.0)
     (fixture.setRestitution fixture 0.3))
 
   ;; Rendering our cute lil ball friend at its coordinates.
