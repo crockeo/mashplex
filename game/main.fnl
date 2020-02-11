@@ -17,7 +17,6 @@
 (local entities
        [camera
         tilemap
-        (player.make 100 100)
         (floor-top.make (/ screen-width 2)
                         (- screen-height 16)
                         screen-width
@@ -27,7 +26,8 @@
 (fn love.load []
   (: repl :start)
   (each [_ entity (ipairs entities)]
-    (entity.load {"world" world})))
+    (entity.load {"entities" entities
+                  "world" world})))
 
 (fn love.draw []
   (each [_ entity (ipairs entities)]
