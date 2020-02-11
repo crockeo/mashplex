@@ -22,7 +22,8 @@
     ;; Physics resources
     (set body (love.physics.newBody
                params.world
-               x y
+               (+ x radius)
+               (+ y radius)
                "dynamic"))
 
     (set shape (love.physics.newCircleShape 16))

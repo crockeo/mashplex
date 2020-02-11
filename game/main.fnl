@@ -16,12 +16,7 @@
 
 (local entities
        [camera
-        tilemap
-        (floor-top.make (/ screen-width 2)
-                        (- screen-height 16)
-                        screen-width
-                        32)
-        ])
+        tilemap])
 
 (fn love.load []
   (: repl :start)
@@ -31,7 +26,9 @@
 
 (fn love.draw []
   (each [_ entity (ipairs entities)]
-    (entity.draw {"camera" camera})))
+    (entity.draw {"camera" camera
+                  "screen-height" screen-height
+                  "screen-width" screen-width})))
 
 (fn love.update [dt]
   (each [_ entity (ipairs entities)]
