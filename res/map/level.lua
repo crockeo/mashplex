@@ -20,7 +20,7 @@ return {
       spacing = 0,
       margin = 0,
       columns = 16,
-      image = "./Vikings_tilemaps_016.bmp",
+      image = "Vikings_tilemaps_016.bmp",
       imagewidth = 320,
       imageheight = 200,
       tileoffset = {
@@ -119,7 +119,7 @@ return {
       objects = {
         {
           id = 6,
-          name = "",
+          name = "Spawn",
           type = "",
           shape = "ellipse",
           x = 139.333,
