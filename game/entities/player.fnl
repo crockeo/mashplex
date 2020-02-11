@@ -14,6 +14,29 @@
   (var shape nil)
   (var fixture nil)
 
+  ;; Generating the rays that we use to check if we're actively on the ground.
+  (fn player-ground-rays []
+    (let [ray-count 20
+          margin-mul 1.35
+
+          (x y) (body:getWorldPoint (shape:getPoint))
+
+          min-angle (/ (* 5 math.pi) 4)
+          max-angle (/ (* 7 math.pi) 4)
+          step (/ (- max-angle min-angle) (- ray-count 1))
+
+          rays []]
+
+      (for [i 0 (- ray-count 1)]
+        (local angle (+ min-angle (* i step)))
+
+        (table.insert rays
+                      [x y
+                       (- x (* radius margin-mul (math.cos angle)))
+                       (- y (* radius margin-mul (math.sin angle)))]))
+
+      rays))
+
   ;; Load's the player resources. Namely our cute lil ball friend.
   (fn player-load [params]
     ;; Rendering resources
@@ -46,15 +69,34 @@
       (transform.rotate transform angle)
       (transform.translate transform (- radius) (- radius))
 
-      (love.graphics.draw sprite transform)))
+      (love.graphics.draw sprite transform))
+
+    (when params.debug
+      (local rays (player-ground-rays))
+
+      (love.graphics.setColor 1 0 0)
+      (each [_ ray (ipairs rays)]
+        (local (x1 y1 x2 y2) (unpack ray))
+
+        (love.graphics.line x1 y1 x2 y2))
+      (love.graphics.setColor 1 1 1)))
 
   ;; Returns whether or not the player is actively on the ground.
   (fn player-on-ground []
     (lume.reduce
-     (lume.map (body.getContacts body)
-               (fn [contact]
-                 (let [(_ dy) (contact.getNormal contact)]
-                   (< dy 0))))
+     (lume.map (player-ground-rays)
+               (fn [rays]
+                 (let [(x1 y1 x2 y2) (unpack rays)
+                       world (body:getWorld)]
+
+                   (var on-ground false)
+                   (world:rayCast x1 y1 x2 y2
+                                  (fn [other-fixture x y nx ny fraction]
+                                    (when (and (~= other-fixture fixture)
+                                               (< ny 0))
+                                      (set on-ground true))
+                                    0))
+                   on-ground)))
      (fn [a b] (or a b))
      false))
 
