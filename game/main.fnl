@@ -16,7 +16,7 @@
 
 (local entities
        [camera
-        player
+        (player.make 100 100)
         (floor-top.make (/ screen-width 2)
                         (- screen-height 16)
                         screen-width
