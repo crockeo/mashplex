@@ -1,26 +1,74 @@
 (local input (require "game.input"))
 
-(local button-count 3)
-(var selected-button 0)
+(local player-scale 6)
+(local player-rotation-rate (/ math.pi 8))
 
-(fn menu-load [])
+(var player-sprite nil)
+(var player-rotation 0)
 
-(fn menu-init []
-  (set selected-button 0))
+(var title nil)
+(var subtitle nil)
 
-(fn menu-draw []
-  (love.graphics.print
-   (string.format "%d" selected-button)
-   10 10))
+(fn menu-load []
+  (set player-sprite (love.graphics.newImage "res/player.png"))
+
+  (set title (love.graphics.newText
+              (love.graphics.getFont)
+              "m a s h p l e x"))
+
+  (set subtitle (love.graphics.newText
+                 (love.graphics.getFont)
+                 "press JUMP to start")))
+
+(fn menu-init [])
+
+(fn menu-draw [params]
+  (let [(width height) (player-sprite:getDimensions)]
+    (love.graphics.draw player-sprite
+
+                        (/ params.window-width 2)
+                        0
+
+                        player-rotation
+
+                        player-scale
+                        player-scale
+
+                        (* width 0.5)
+                        (* height 0.5)))
+
+  (let [scale (+ 1
+                 (/ (math.sin (* (love.timer.getTime) math.pi)) 4))
+
+        rotation (* 0.1 math.pi (math.sin (* (love.timer.getTime) 2)))]
+    (love.graphics.draw title
+
+                        (/ params.window-width 2)
+                        (/ params.window-height 2)
+
+                        rotation
+
+                        scale scale
+
+                        (/ (title:getWidth) 2)
+                        (/ (title:getHeight) 2)))
+
+  (love.graphics.draw subtitle
+
+                      (/ params.window-width 2)
+                      (- params.window-height 16)
+
+                      0
+
+                      0.6 0.6
+
+                      (/ (subtitle:getWidth) 2)
+                      (subtitle:getHeight)))
+
+(fn menu-update [params]
+  (set player-rotation (+ player-rotation (* player-rotation-rate params.dt))))
 
 (fn menu-keypressed [params]
-  (local inputs {"up" -1
-                 "down" 1})
-
-  (each [input-name dir (pairs inputs)]
-    (when (input.is-input params.key input-name)
-      (set selected-button (% (+ selected-button dir) button-count))))
-
   (when (input.is-input params.key "jump")
     (params.mode-stack.set-mode :init)))
 
@@ -29,4 +77,5 @@
  :load menu-load
  :init menu-init
  :draw menu-draw
+ :update menu-update
  :keypressed menu-keypressed}

@@ -3,12 +3,20 @@
 
 (local mode-stack (require "game.mode-stack"))
 
-;; Love2D callbacks that are automatically forwarded to
-(fn love.draw []
-  (mode-stack.call-on-mode :draw {}))
+;; Flag used to turn on debug mode.
+(var debug-mode false)
 
+;; Love2D callbacks that are automatically forwarded to
 (fn love.load [arg unfiltered-arg]
   (repl:start)
+
+  (each [_ s (ipairs arg)]
+    (when (= s "debug")
+      (set debug-mode true)))
+
+  ;; Love configurations
+  (love.graphics.setDefaultFilter "nearest" "nearest")
+  (love.graphics.setNewFont "res/terminal-grotesque_open.otf" 64)
 
   ;; TODO: Move this into a more permanent position. This isn't the best place
   ;;       to do all of the initialization, especially as the game gets more
@@ -23,6 +31,12 @@
 
 (fn love.quit []
   (mode-stack.call-on-mode :quit {}))
+
+(fn love.draw []
+  (let [(window-width window-height) (love.window.getMode)]
+    (mode-stack.call-on-mode :draw {:debug debug-mode
+                                    :window-height window-height
+                                    :window-width window-width})))
 
 (fn love.update [dt]
   (mode-stack.call-on-mode :update {:dt dt
