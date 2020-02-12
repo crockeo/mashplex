@@ -48,16 +48,29 @@
   (set mode-stack [mode]))
 
 ;; Calling a named callback on a mode if it exists
-(fn call-on-mode [callback params modes]
+(fn call-on-mode [callback params reverse modes]
   (let [modes (or modes mode-stack)
         num-modes (length modes)
-        head (. modes num-modes)
-        tail [(unpack modes 1 (- num-modes 1))]]
+
+        head (if reverse
+                 (. modes 1)
+                 (. modes num-modes))
+
+        tail (if reverse
+                 [(unpack modes 2 num-modes)]
+                 [(unpack modes 1 (- num-modes 1))])]
+
+    (when (and reverse head)
+      (print head.name)
+      (each [_ t (ipairs tail)]
+        (print t.name))
+      (print "---"))
+
     (match head
       nil (do)
       {callback callback-fn} (when (callback-fn params)
-                               (call-on-mode callback params tail))
-      default (call-on-mode callback params tail))))
+                               (call-on-mode callback params reverse tail))
+      default (call-on-mode callback params reverse tail))))
 
 {:modes modes
 

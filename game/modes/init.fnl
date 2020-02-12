@@ -25,13 +25,18 @@
     (entity.draw {"camera" camera
                   "debug" false
                   "screen-height" screen-height
-                  "screen-width" screen-width})))
+                  "screen-width" screen-width}))
+
+  (love.graphics.origin)
+
+  true)
 
 (fn init-update [params]
   (each [_ entity (ipairs entities)]
     (entity.update {"camera" camera
                     "dt" params.dt}))
   (world.update world params.dt)
+
   true)
 
 (fn init-keypressed [params]
@@ -39,7 +44,9 @@
     (params.mode-stack.push-mode :pause))
 
   (each [_ entity (ipairs entities)]
-    (entity.keypressed params)))
+    (entity.keypressed params))
+
+  true)
 
 {:name "init"
 
