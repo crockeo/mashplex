@@ -31,11 +31,12 @@
   (each [_ entity (ipairs entities)]
     (entity.update {"camera" camera
                     "dt" params.dt}))
-  (world.update world params.dt))
+  (world.update world params.dt)
+  true)
 
 (fn init-keypressed [params]
-  (when (= params.key "q")
-    (params.mode-stack.push-mode :init2))
+  (when (= params.key "p")
+    (params.mode-stack.push-mode :pause))
 
   (each [_ entity (ipairs entities)]
     (entity.keypressed params)))

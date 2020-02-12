@@ -1,6 +1,8 @@
 (local init-mode (require "game.modes.init"))
+(local pause-mode (require "game.modes.pause"))
 
-(local modes {init-mode.name init-mode})
+(local modes {init-mode.name init-mode
+              pause-mode.name pause-mode})
 (var mode-stack [init-mode])
 
 ;; Pushes a named mode onto the top of the stack. This selects the mode where
@@ -19,22 +21,14 @@
 
 ;; Calling a named callback on a mode if it exists
 (fn call-on-mode [callback params modes]
-  (local safe-modes (if (= modes nil)
-                        mode-stack
-                        modes))
-
-  (let [modes (if (= modes nil)
-                  mode-stack
-                  modes)
-
-        head (. modes 1)
-        tail [(unpack modes 2)]
-
-        callback-fn (. head callback)]
-    (when (not (or (= head nil)
-                   (= callback-fn nil)
-                   (= (callback-fn params) false)))
-      call-on-mode callback params tail)))
+  (let [modes (or modes mode-stack)
+        num-modes (length modes)
+        head (. modes num-modes)
+        tail [(unpack modes 1 (- num-modes 1))]]
+    (match head
+      nil (do)
+      {callback callback-fn} (when (callback-fn params)
+                               (call-on-mode callback params tail)))))
 
 {:push-mode push-mode
  :pop-mode pop-mode
