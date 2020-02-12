@@ -2,7 +2,6 @@
 (local repl (require "lib.stdio"))
 
 (local mode-stack (require "game.mode-stack"))
-(mode-stack.push-mode "init")
 
 ;; Love2D callbacks that are automatically forwarded to
 (fn love.draw []

@@ -34,8 +34,8 @@
   (world.update world params.dt))
 
 (fn init-keypressed [params]
-  ;; (when (= params.key "q")
-  ;;   (params.mode-stack.push-mode :init2))
+  (when (= params.key "q")
+    (params.mode-stack.push-mode :init2))
 
   (each [_ entity (ipairs entities)]
     (entity.keypressed params)))
