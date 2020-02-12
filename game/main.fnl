@@ -9,6 +9,15 @@
 
 (fn love.load [arg unfiltered-arg]
   (repl:start)
+
+  ;; TODO: Move this into a more permanent position. This isn't the best place
+  ;;       to do all of the initialization, especially as the game gets more
+  ;;       modes.
+  (each [_ mode (pairs mode-stack.modes)]
+    (when mode.load
+      (mode.load {:arg arg
+                  :unfiltered-arg unfiltered-arg})))
+
   (mode-stack.call-on-mode :load {:arg arg
                                   :unfiltered-arg unfiltered-arg}))
 

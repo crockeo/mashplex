@@ -1,9 +1,21 @@
-(local init-mode (require "game.modes.init"))
-(local pause-mode (require "game.modes.pause"))
+(local lume (require "lib.lume"))
 
-(local modes {init-mode.name init-mode
-              pause-mode.name pause-mode})
-(var mode-stack [init-mode])
+;; Constructing the list of modes. Designed in this way so we can have a single
+;; import define the existance of a mode.
+(fn generate-modes [mode-list]
+  (local modes {})
+
+  (each [_ mode (ipairs mode-list)]
+    (tset modes mode.name mode))
+
+  modes)
+
+(local modes (generate-modes
+              [(require "game.modes.init")
+               (require "game.modes.menu")
+               (require "game.modes.pause")]))
+
+(var mode-stack [(. modes :menu)])
 
 ;; Pushes a named mode onto the top of the stack. This selects the mode where
 ;; (= name mode.name).
@@ -47,7 +59,9 @@
                                (call-on-mode callback params tail))
       default (call-on-mode callback params tail))))
 
-{:push-mode push-mode
+{:modes modes
+
+ :push-mode push-mode
  :pop-mode pop-mode
  :set-mode set-mode
 
