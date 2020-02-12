@@ -16,7 +16,7 @@
 
   ;; Love configurations
   (love.graphics.setDefaultFilter "nearest" "nearest")
-  (love.graphics.setNewFont "res/terminal-grotesque_open.otf" 64)
+  (love.graphics.setNewFont "res/terminal-grotesque.ttf" 64)
 
   ;; TODO: Move this into a more permanent position. This isn't the best place
   ;;       to do all of the initialization, especially as the game gets more
