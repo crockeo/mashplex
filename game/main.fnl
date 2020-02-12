@@ -1,44 +1,32 @@
 (local fennel (require "lib.fennel"))
 (local repl (require "lib.stdio"))
 
-(local camera (require "game.entities.camera"))
+(local mode-stack (require "game.mode-stack"))
+(mode-stack.push-mode "init")
 
-(local floor-top (require "game.entities.floor-top"))
-(local player (require "game.entities.player"))
-(local tilemap (require "game.entities.tilemap"))
-
-(local world (love.physics.newWorld
-              0
-              (* 9.81 30)
-              true))
-
-(local (screen-width screen-height) (love.window.getMode))
-
-(local entities
-       [camera
-        tilemap])
-
-(fn love.load []
-  (: repl :start)
-  (each [_ entity (ipairs entities)]
-    (entity.load {"entities" entities
-                  "world" world})))
-
+;; Love2D callbacks that are automatically forwarded to
 (fn love.draw []
-  (each [_ entity (ipairs entities)]
-    (entity.draw {"camera" camera
-                  "debug" false
-                  "screen-height" screen-height
-                  "screen-width" screen-width})))
+  (mode-stack.call-on-mode :draw {}))
+
+(fn love.load [arg unfiltered-arg]
+  (repl:start)
+  (mode-stack.call-on-mode :load {:arg arg
+                                  :unfiltered-arg unfiltered-arg}))
+
+(fn love.quit []
+  (mode-stack.call-on-mode :quit {}))
 
 (fn love.update [dt]
-  (each [_ entity (ipairs entities)]
-    (entity.update {"camera" camera
-                    "dt" dt}))
-  (world.update world dt))
+  (mode-stack.call-on-mode :update {:dt dt
+                                    :mode-stack mode-stack}))
 
-(fn love.keypressed [key scancode repeat]
-  (each [_ entity (ipairs entities)]
-    (entity.keypressed {"key" key
-                        "repeat" repeat
-                        "scancode" scancode})))
+(fn love.keypressed [key scancode isrepeat]
+  (mode-stack.call-on-mode :keypressed {:isrepeat isrepeat
+                                        :key key
+                                        :mode-stack mode-stack
+                                        :scancode scancode}))
+
+(fn love.keyreleased [key scancode]
+  (mode-stack.call-on-mode :keypressed {:key key
+                                        :mode-stack mode-stack
+                                        :scancode scancode}))
