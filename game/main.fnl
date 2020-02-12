@@ -35,6 +35,7 @@
 (fn love.draw []
   (let [(window-width window-height) (love.window.getMode)]
     (mode-stack.call-on-mode :draw {:debug debug-mode
+                                    :time (love.timer.getTime)
                                     :window-height window-height
                                     :window-width window-width} true)))
 

@@ -60,12 +60,6 @@
                  [(unpack modes 2 num-modes)]
                  [(unpack modes 1 (- num-modes 1))])]
 
-    (when (and reverse head)
-      (print head.name)
-      (each [_ t (ipairs tail)]
-        (print t.name))
-      (print "---"))
-
     (match head
       nil (do)
       {callback callback-fn} (when (callback-fn params)
