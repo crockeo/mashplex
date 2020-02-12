@@ -7,8 +7,16 @@
 
 ;; Pushes a named mode onto the top of the stack. This selects the mode where
 ;; (= name mode.name).
-(fn push-mode [name]
-  (table.insert mode-stack (. modes name)))
+(fn push-mode [name args]
+  (local mode (. modes name))
+  (assert mode
+          (string.format "No such mode '%s'"
+                         name))
+
+  (when (and mode.init args)
+    (mode.init (unpack args)))
+
+  (table.insert mode-stack mode))
 
 ;; Takes the topmost mode off of the stack.
 (fn pop-mode []
@@ -16,8 +24,16 @@
 
 ;; Sets the stack to equal exactly the selected mode. Equivalent to popping all
 ;; of the modes off of the stack, and then pushing a mode.
-(fn set-mode [name]
-  (set mode-stack [(. modes name)]))
+(fn set-mode [name args]
+  (local mode (. modes name))
+  (assert mode
+          (string.format "No such mode '%s'"
+                         name))
+
+  (when (and mode.init args)
+    (mode.init (unpack args)))
+
+  (set mode-stack [mode]))
 
 ;; Calling a named callback on a mode if it exists
 (fn call-on-mode [callback params modes]
