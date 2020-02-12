@@ -3,6 +3,8 @@
 (local player-scale 6)
 (local player-rotation-rate (/ math.pi 8))
 
+(var rainbow-shader nil)
+
 (var player-sprite nil)
 (var player-rotation 0)
 
@@ -10,6 +12,8 @@
 (var subtitle nil)
 
 (fn menu-load []
+  (set rainbow-shader (love.graphics.newShader "res/rainbow.frag"))
+
   (set player-sprite (love.graphics.newImage "res/player.png"))
 
   (set title (love.graphics.newText
@@ -37,6 +41,8 @@
                         (* width 0.5)
                         (* height 0.5)))
 
+  (rainbow-shader:send "time" params.time)
+  (love.graphics.setShader rainbow-shader)
   (let [scale (+ 1
                  (/ (math.sin (* (love.timer.getTime) math.pi)) 4))
 
@@ -52,6 +58,7 @@
 
                         (/ (title:getWidth) 2)
                         (/ (title:getHeight) 2)))
+  (love.graphics.setShader)
 
   (love.graphics.draw subtitle
 
