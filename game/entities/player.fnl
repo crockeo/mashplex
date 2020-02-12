@@ -16,7 +16,7 @@
 
   ;; Generating the rays that we use to check if we're actively on the ground.
   (fn player-ground-rays []
-    (let [ray-count 20
+    (let [ray-count 5
           margin-mul 1.35
 
           (x y) (body:getWorldPoint (shape:getPoint))
