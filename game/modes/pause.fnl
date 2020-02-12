@@ -5,7 +5,7 @@
   false)
 
 (fn pause-keypressed [params]
-  (when (= params.key "q")
+  (when (= params.key "p")
     (params.mode-stack.pop-mode))
 
   false)

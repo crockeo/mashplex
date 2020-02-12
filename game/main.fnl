@@ -26,6 +26,6 @@
                                         :scancode scancode}))
 
 (fn love.keyreleased [key scancode]
-  (mode-stack.call-on-mode :keypressed {:key key
+  (mode-stack.call-on-mode :keyreleased {:key key
                                         :mode-stack mode-stack
                                         :scancode scancode}))
