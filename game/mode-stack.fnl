@@ -44,7 +44,8 @@
     (match head
       nil (do)
       {callback callback-fn} (when (callback-fn params)
-                               (call-on-mode callback params tail)))))
+                               (call-on-mode callback params tail))
+      default (call-on-mode callback params tail))))
 
 {:push-mode push-mode
  :pop-mode pop-mode

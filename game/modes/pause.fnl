@@ -1,6 +1,3 @@
-(fn pause-draw []
-  true)
-
 (fn pause-update [params]
   false)
 
@@ -12,6 +9,5 @@
 
 {:name :pause
 
- :draw pause-draw
  :update pause-update
  :keypressed pause-keypressed}
