@@ -11,22 +11,22 @@
   modes)
 
 (local modes (generate-modes
-              [(require "game.modes.init")
+              [(require "game.modes.game")
                (require "game.modes.menu")
                (require "game.modes.pause")]))
 
 (var mode-stack [(. modes :menu)])
 
-;; Pushes a named mode onto the top of the stack. This selects the mode where
+;; Pushes a named mode onto the top of the stck. This selects the mode where
 ;; (= name mode.name).
-(fn push-mode [name args]
+(fn push-mode [name params]
   (local mode (. modes name))
   (assert mode
           (string.format "No such mode '%s'"
                          name))
 
-  (when (and mode.init args)
-    (mode.init (unpack args)))
+  (when (and mode.init params)
+    (mode.init params))
 
   (table.insert mode-stack mode))
 
@@ -45,7 +45,11 @@
   (when (and mode.init args)
     (mode.init (unpack args)))
 
-  (set mode-stack [mode]))
+  (set mode-stack [mode])
+
+  (each [key value (pairs (. mode-stack 1))]
+    (when (= key :name)
+      (print value))))
 
 ;; Calling a named callback on a mode if it exists
 (fn call-on-mode [callback params reverse modes]

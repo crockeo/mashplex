@@ -24,8 +24,6 @@
                  (love.graphics.getFont)
                  "press JUMP to start")))
 
-(fn menu-init [])
-
 (fn menu-draw [params]
   (let [(width height) (player-sprite:getDimensions)]
     (love.graphics.draw player-sprite
@@ -77,12 +75,11 @@
 
 (fn menu-keypressed [params]
   (when (input.is-input params.key "jump")
-    (params.mode-stack.set-mode :init)))
+    (params.mode-stack.set-mode :game)))
 
 {:name :menu
 
  :load menu-load
- :init menu-init
  :draw menu-draw
  :update menu-update
  :keypressed menu-keypressed}

@@ -32,8 +32,8 @@
 
 (fn tiled-draw [params]
   (map.draw map
-            (- (/ params.screen-width 2) (params.camera.getX))
-            (- (/ params.screen-height 2) (params.camera.getY)))
+            (- (/ params.window-width 2) (params.camera.getX))
+            (- (/ params.window-height 2) (params.camera.getY)))
 
   (when params.debug
     (love.graphics.setColor 1 0 0)
