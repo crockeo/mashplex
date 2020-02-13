@@ -1,18 +1,20 @@
+;; We need to initialize the global for debug-mode here, rather than after
+;; imports, in case any of our imports depend on the existence of the symbol.
+(global debug-mode false)
+
 (local fennel (require "lib.fennel"))
 (local repl (require "lib.stdio"))
 
 (local mode-stack (require "game.mode-stack"))
 
-;; Flag used to turn on debug mode.
-(var debug-mode false)
-
 ;; Love2D callbacks that are automatically forwarded to
 (fn love.load [arg unfiltered-arg]
   (repl:start)
 
+  ;; Globally setting debug mode, when appropriate
   (each [_ s (ipairs arg)]
     (when (= s "debug")
-      (set debug-mode true)))
+      (global debug-mode true)))
 
   ;; Love configurations
   (love.graphics.setDefaultFilter "nearest" "nearest")
@@ -34,8 +36,7 @@
 
 (fn love.draw []
   (let [(window-width window-height) (love.window.getMode)]
-    (mode-stack.call-on-mode :draw {:debug debug-mode
-                                    :time (love.timer.getTime)
+    (mode-stack.call-on-mode :draw {:time (love.timer.getTime)
                                     :window-height window-height
                                     :window-width window-width} true)))
 

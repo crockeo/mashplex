@@ -71,7 +71,7 @@
 
       (love.graphics.draw sprite transform))
 
-    (when params.debug
+    (when debug-mode
       (local rays (player-ground-rays))
 
       (love.graphics.setColor 1 0 0)

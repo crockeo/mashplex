@@ -9,42 +9,47 @@
               (* 9.81 30)
               true))
 
-(local entities [camera
-                 tilemap])
+(var entities [camera tilemap])
 
-;; Applies a function to each entity in the game.
-(fn apply-to-entities [fn-name params]
-  (each [_ entity (ipairs entities)]
-    (when (. entity fn-name)
-      ((. entity fn-name) params))))
+(fn game-load [params]
+  (set entities [camera tilemap])
+  (utils.call-on entities
+                 :load
+                 (utils.union-tables params
+                                     {:entities entities
+                                      :world world})))
 
-;; Constructs a callback that delegates functionality to entities.
-(fn make-callback [fn-name game-params]
-  (fn [params]
-    (apply-to-entities fn-name
-                       (utils.union-tables params
-                                           game-params))
-    true))
+(fn game-init [params]
+  (utils.call-on entities
+                 :init
+                 (utils.union-tables params
+                                     {:entities entities
+                                      :world world})))
 
-;; Wrapper around the normal make-callback to also update the world.
-(local game-update-delegate (make-callback :update
-                                           {:camera camera
-                                            :world world}))
+(fn game-draw [params]
+  (utils.call-on entities
+                 :draw
+                 (utils.union-tables params
+                                     {:camera camera})))
 
 (fn game-update [params]
-  (game-update-delegate params)
+  (utils.call-on entities
+                 :update
+                 (utils.union-tables params
+                                     {:camera camera
+                                      :world world}))
   (world:update params.dt))
+
+(fn game-keypressed [params]
+  (utils.call-on entities
+                 :keypressed
+                 params))
+
 
 {:name :game
 
- :load (make-callback :load
-                      {:entities entities
-                       :world world})
-
- :draw (make-callback :draw
-                      {:camera camera})
-
+ :load game-load
+ :init game-init
+ :draw game-draw
  :update game-update
-
- :keypressed (make-callback :keypressed
-                            {})}
+ :keypressed game-keypressed}

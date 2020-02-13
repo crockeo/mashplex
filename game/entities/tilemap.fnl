@@ -35,7 +35,7 @@
             (- (/ params.window-width 2) (params.camera.getX))
             (- (/ params.window-height 2) (params.camera.getY)))
 
-  (when params.debug
+  (when debug-mode
     (love.graphics.setColor 1 0 0)
     (map:box2d_draw)
     (love.graphics.setColor 1 1 1)))
