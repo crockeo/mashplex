@@ -9,19 +9,13 @@
               (* 9.81 30)
               true))
 
-(var entities [camera tilemap])
-
-(fn game-load [params]
-  (set entities [camera tilemap])
-  (utils.call-on entities
-                 :load
-                 (utils.union-tables params
-                                     {:entities entities
-                                      :world world})))
+(var entities [])
 
 (fn game-init [params]
+  (set entities [camera tilemap])
+
   (utils.call-on entities
-                 :init
+                 :load
                  (utils.union-tables params
                                      {:entities entities
                                       :world world})))
@@ -48,7 +42,6 @@
 
 {:name :game
 
- :load game-load
  :init game-init
  :draw game-draw
  :update game-update

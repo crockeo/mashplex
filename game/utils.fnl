@@ -5,6 +5,12 @@
                      (= value nil))
                 (= (type value) expected-type)))))
 
+;; Prints out a table's key/value pairs
+(fn print-table [t]
+  (check-type t "table")
+  (each [key value (pairs t)]
+    (print key value)))
+
 ;; Unions a series of tables. When multiple tables have the same keys, the
 ;; function prefers values in later tables.
 (fn union-tables [...]
@@ -27,5 +33,7 @@
       (when callback
         (callback (unpack [...]))))))
 
-{:union-tables union-tables
+{:check-type check-type
+ :print-table print-table
+ :union-tables union-tables
  :call-on call-on}

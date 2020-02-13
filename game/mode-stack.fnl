@@ -19,14 +19,14 @@
 
 ;; Pushes a named mode onto the top of the stck. This selects the mode where
 ;; (= name mode.name).
-(fn push-mode [name params]
+(fn push-mode [name ...]
   (local mode (. modes name))
   (assert mode
           (string.format "No such mode '%s'"
                          name))
 
-  (when (and mode.init params)
-    (mode.init params))
+  (when mode.init
+    (mode.init (unpack [...])))
 
   (table.insert mode-stack mode))
 
@@ -36,14 +36,14 @@
 
 ;; Sets the stack to equal exactly the selected mode. Equivalent to popping all
 ;; of the modes off of the stack, and then pushing a mode.
-(fn set-mode [name args]
+(fn set-mode [name ...]
   (local mode (. modes name))
   (assert mode
           (string.format "No such mode '%s'"
                          name))
 
-  (when (and mode.init args)
-    (mode.init (unpack args)))
+  (when mode.init
+    (mode.init (unpack [...])))
 
   (set mode-stack [mode]))
 

@@ -75,7 +75,8 @@
 
 (fn menu-keypressed [params]
   (when (input.is-input params.key "jump")
-    (params.mode-stack.set-mode :game)))
+    (params.mode-stack.set-mode :game
+                                {:level 1})))
 
 {:name :menu
 
