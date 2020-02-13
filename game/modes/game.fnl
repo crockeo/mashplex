@@ -26,6 +26,15 @@
                                            game-params))
     true))
 
+;; Wrapper around the normal make-callback to also update the world.
+(local game-update-delegate (make-callback :update
+                                           {:camera camera
+                                            :world world}))
+
+(fn game-update [params]
+  (game-update-delegate params)
+  (world:update params.dt))
+
 {:name :game
 
  :load (make-callback :load
@@ -35,8 +44,7 @@
  :draw (make-callback :draw
                       {:camera camera})
 
- :update (make-callback :update
-                        {:camera camera})
+ :update game-update
 
  :keypressed (make-callback :keypressed
                             {})}

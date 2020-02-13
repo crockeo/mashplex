@@ -45,11 +45,7 @@
   (when (and mode.init args)
     (mode.init (unpack args)))
 
-  (set mode-stack [mode])
-
-  (each [key value (pairs (. mode-stack 1))]
-    (when (= key :name)
-      (print value))))
+  (set mode-stack [mode]))
 
 ;; Calling a named callback on a mode if it exists
 (fn call-on-mode [callback params reverse modes]
