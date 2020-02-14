@@ -1,7 +1,5 @@
 (local lume (require "lib.lume"))
 
-(local (screen-width screen-height) (love.window.getMode))
-
 ;; The speed at which the camera goes towards the target. If the math is right
 ;; in camera-update, it should take (1/lerp-rate) seconds to go from any
 ;; location to the new location.
@@ -34,8 +32,8 @@
 ;; Moves the global coordinate space to the location of the camera at each tick.
 (fn camera-draw [params]
   (love.graphics.origin)
-  (love.graphics.translate (+ (- x) (/ screen-width 2))
-                           (+ (- y) (/ screen-height 2))))
+  (love.graphics.translate (+ (- x) (/ params.window-width 2))
+                           (+ (- y) (/ params.window-height 2))))
 
 ;; LERPs the camera towards the targeted location.
 (fn camera-update [params]
