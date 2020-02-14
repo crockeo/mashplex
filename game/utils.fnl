@@ -28,7 +28,7 @@
   (check-type ts "table")
   (check-type callback-name "string")
 
-  (each [_ t (ipairs ts)]
+  (each [_ t (pairs ts)]
     (let [callback (. t callback-name)]
       (when callback
         (callback (unpack [...]))))))

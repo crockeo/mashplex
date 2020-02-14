@@ -38,7 +38,7 @@
       rays))
 
   ;; Load's the player resources. Namely our cute lil ball friend.
-  (fn player-load [params]
+  (fn player-init [params]
     ;; Rendering resources
     (set sprite (love.graphics.newImage "res/player.png"))
 
@@ -123,9 +123,15 @@
                                0
                                (- jump-impulse))))
 
-  {:load player-load
+  ;; Sets the player position. Used for when we load the player into a map.
+  (fn player-set-pos [x y]
+    (body:setPosition (+ x radius) (+ y radius)))
+
+  {:init player-init
    :draw player-draw
    :update player-update
-   :keypressed player-keypressed})
+   :keypressed player-keypressed
+
+   :set-pos player-set-pos})
 
 {:make make}

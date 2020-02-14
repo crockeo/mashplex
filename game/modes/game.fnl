@@ -1,6 +1,7 @@
 (local utils (require "game.utils"))
 
 (local camera (require "game.entities.camera"))
+(local levels (require "game.levels"))
 (local player (require "game.entities.player"))
 (local tilemap (require "game.entities.tilemap"))
 
@@ -9,16 +10,21 @@
               (* 9.81 30)
               true))
 
-(var entities [])
+(var entities {})
 
 (fn game-init [params]
-  (set entities [camera tilemap])
+  (set entities {:camera camera
+                 :tilemap (tilemap.make (levels.get-level params.level))
+                 :player (player.make 0 0)})
 
   (utils.call-on entities
-                 :load
+                 :init
                  (utils.union-tables params
                                      {:entities entities
-                                      :world world})))
+                                      :world world}))
+
+  (let [(x y) (entities.tilemap.player-start-position)]
+    (entities.player.set-pos x y)))
 
 (fn game-draw [params]
   (utils.call-on entities
