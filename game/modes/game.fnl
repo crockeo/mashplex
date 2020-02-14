@@ -11,8 +11,11 @@
               true))
 
 (var entities {})
+(var level-index nil)
 
 (fn game-init [params]
+  (set level-index params.level)
+
   (set entities {:camera camera
                  :tilemap (tilemap.make (levels.get-level params.level))
                  :player (player.make 0 0)})
