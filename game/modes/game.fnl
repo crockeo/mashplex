@@ -3,6 +3,7 @@
 (local camera (require "game.entities.camera"))
 (local levels (require "game.levels"))
 (local player (require "game.entities.player"))
+(local tiled-util (require "game.tiled-util"))
 (local tilemap (require "game.entities.tilemap"))
 
 (local world (love.physics.newWorld
@@ -41,6 +42,16 @@
                  (utils.union-tables params
                                      {:camera camera
                                       :world world}))
+
+  (let [(x y) (entities.player.get-pos)
+        properties (tiled-util.get-occupied-flags (entities.tilemap.get-map)
+                                                  "Foreground"
+                                                  x y
+                                                  (entities.player.get-radius))]
+    (match properties
+      {:win true} (print "you win!")
+      {:die true} (print "you lose!")))
+
   (world:update params.dt))
 
 (fn game-keypressed [params]

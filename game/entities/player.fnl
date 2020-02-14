@@ -123,7 +123,12 @@
                                0
                                (- jump-impulse))))
 
-  ;; Sets the player position. Used for when we load the player into a map.
+  (fn player-get-radius []
+    radius)
+
+  (fn player-get-pos []
+    (body:getPosition))
+
   (fn player-set-pos [x y]
     (body:setPosition (+ x radius) (+ y radius)))
 
@@ -132,6 +137,8 @@
    :update player-update
    :keypressed player-keypressed
 
+   :get-radius player-get-radius
+   :get-pos player-get-pos
    :set-pos player-set-pos})
 
 {:make make}

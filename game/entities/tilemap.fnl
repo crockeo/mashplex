@@ -27,6 +27,9 @@
   (fn tilemap-update [params]
     (map:update params.dt))
 
+  (fn get-map []
+    map)
+
   (fn player-start-position []
     (let [spawn (find-named-object map.layers.Player.objects "Spawn")]
       (values spawn.x spawn.y)))
@@ -35,6 +38,7 @@
    :draw tilemap-draw
    :update tilemap-update
 
+   :get-map get-map
    :player-start-position player-start-position})
 
 {:make tilemap-make}

@@ -33,7 +33,14 @@
       (when callback
         (callback (unpack [...]))))))
 
+;; Simple rounding function.
+(fn round [num]
+  (if (>= (- num (math.floor num)) 0.5)
+      (math.ceil num)
+      (math.floor num)))
+
 {:check-type check-type
  :print-table print-table
  :union-tables union-tables
- :call-on call-on}
+ :call-on call-on
+ :round round}
