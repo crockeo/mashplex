@@ -87,7 +87,7 @@
    <property name="collidable" type="bool" value="true"/>
   </properties>
   <object id="2" x="-200" y="40">
-   <polygon points="0,0 660,0 740,-80 740,-280 760,-300 800,-300 820,-280 820,180 -20,180 -20,20"/>
+   <polygon points="0,0 660,0 685.899,-9.7307 708.13,-26.0805 724.966,-43.5578 734.543,-60.0817 740,-80 740,-280 760,-300 800,-300 820,-280 820,180 -20,180 -20,20"/>
   </object>
  </objectgroup>
  <objectgroup id="2" name="Player" visible="0">
