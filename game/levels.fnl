@@ -5,4 +5,8 @@
 (fn get-level [index]
   (. levels index))
 
-{:get-level get-level}
+(fn get-level-count []
+  (length levels))
+
+{:get-level get-level
+ :get-level-count get-level-count}

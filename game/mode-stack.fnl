@@ -13,7 +13,7 @@
 (local modes (generate-modes
               [(require "game.modes.game")
                (require "game.modes.menu")
-               (require "game.modes.pause")]))
+               (require "game.modes.overlay")]))
 
 (var mode-stack [(. modes :menu)])
 

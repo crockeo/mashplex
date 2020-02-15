@@ -15,7 +15,9 @@
 
         "dash" ["v" "m"]
 
-        "jump" ["z" "/" "space"]})
+        "jump" ["z" "/" "space"]
+
+        "pause" ["p"]})
 
 ;; Checks if a given key is part of an input.
 (fn is-input [key input]
