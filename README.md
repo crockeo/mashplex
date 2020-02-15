@@ -1,6 +1,7 @@
 # mashplex
 
-Learning some Fennel, learning some Love2D, doing some Lisp.
+2D physics based platformer, built in [Love2D](https://love2d.org/) using
+[Fennel](https://fennel-lang.org/).
 
 ## Attributions
 
