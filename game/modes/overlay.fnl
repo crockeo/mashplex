@@ -1,3 +1,5 @@
+(local input (require "game.input"))
+
 (var rainbow-shader nil)
 
 (var title-text nil)
@@ -8,7 +10,7 @@
 (fn overlay-load [params]
   (set rainbow-shader (love.graphics.newShader "res/rainbow.frag"))
   (set continue-text (love.graphics.newText (love.graphics.getFont)
-                                            "Press any key to continue.")))
+                                            "Press JUMP to continue.")))
 
 (fn overlay-init [params]
   (set title-text (love.graphics.newText (love.graphics.getFont)
@@ -51,7 +53,8 @@
   false)
 
 (fn overlay-keypressed [params]
-  (after-overlay params)
+  (when (input.is-input params.key "jump")
+    (after-overlay params))
   false)
 
 {:name :overlay

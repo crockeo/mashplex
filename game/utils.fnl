@@ -39,8 +39,17 @@
       (math.ceil num)
       (math.floor num)))
 
+;; Gets the sign of a number (-1, 0, 1)
+(fn sign [num]
+  (if (< num 0)
+      -1
+      (if (= num 0)
+          0
+          1)))
+
 {:check-type check-type
  :print-table print-table
  :union-tables union-tables
  :call-on call-on
- :round round}
+ :round round
+ :sign sign}

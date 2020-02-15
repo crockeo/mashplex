@@ -29,7 +29,7 @@
    {:text "You Win!"
     :after-overlay (fn []
                      (if (> (+ level-index 1) (levels.get-level-count))
-                         (do) ; TODO: What shouls happen when we're at the end of the road?
+                         (params.mode-stack.set-mode :menu)
                          (params.mode-stack.set-mode :game
                                                      {:level (+ level-index 1)})))}))
 

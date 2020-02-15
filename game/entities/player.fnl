@@ -1,6 +1,7 @@
 (local lume (require "lib.lume"))
 
 (local input (require "game.input"))
+(local utils (require "game.utils"))
 
 (fn make [x y]
   (local speed 100)
@@ -13,6 +14,8 @@
   (var body nil)
   (var shape nil)
   (var fixture nil)
+
+  (var can-dash false)
 
   ;; Generating the rays that we use to check if we're actively on the ground.
   (fn player-ground-rays []
@@ -102,8 +105,10 @@
 
   ;; Updating the player.
   (fn player-update [params]
+    (local on-ground (player-on-ground))
+
     (let [axis (input.get-axis "left" "right")]
-      (when (not (player-on-ground))
+      (when (not on-ground)
         (body.applyForce body
                          (* speed
                             axis)
@@ -113,7 +118,10 @@
                                 (* speed axis)))
 
     (let [(x y) (body.getWorldPoint body (shape.getPoint shape))]
-      (params.camera.set-target (+ x radius) (+ y radius))))
+      (params.camera.set-target (+ x radius) (+ y radius)))
+
+    (when on-ground
+      (set can-dash true)))
 
   ;; Performing actions with the player. Like dashing or jumping.
   (fn player-keypressed [params]
@@ -121,7 +129,19 @@
                (player-on-ground))
       (body.applyLinearImpulse body
                                0
-                               (- jump-impulse))))
+                               (- jump-impulse)))
+
+    (let [axis (input.get-axis "left" "right")
+          (dx dy) (body:getLinearVelocity)
+
+          dash-dir (if (~= axis 0)
+                       axis
+                       (utils.sign dx))]
+      (when (and can-dash
+                 (input.is-input params.key "dash"))
+        (set can-dash false)
+        (body:applyLinearImpulse (* dash-dir jump-impulse)
+                                 0))))
 
   (fn player-get-radius []
     radius)
